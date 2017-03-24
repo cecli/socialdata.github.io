@@ -38,6 +38,17 @@
     <body>
         <script type="text/javascript">
 
+			var mean_file_k2 = "k2_means.csv";
+			var data_file_k2 = "Data_k2.csv";
+			var mean_file_k3 = "k3_means.csv";
+			var data_file_k3 = "Data_k3.csv";
+			var mean_file_k4 = "k4_means.csv";
+			var data_file_k4 = "Data_k4.csv";
+			var mean_file_k5 = "k5_means.csv";
+			var data_file_k5 = "Data_k5.csv";
+			var mean_file_k6 = "k6_means.csv";
+			var data_file_k6 = "Data_k6.csv";
+
 			function sleep (time) {
 				return new Promise((resolve) => setTimeout(resolve, time));
 			}
@@ -146,18 +157,7 @@
 								else if(d.Label == 1) {
 									return "rgb(0, 200, 0)";
 								}
-								// else if(d.Label == 2) {
-								// 	return "rgb(200, 0, 0)";
-								// }
-								// else if(d.Label == 3) {
-								// 	return "rgb(200, 200, 0)";
-								// }
-								// else if(d.Label == 4) {
-								// 	return "rgb(200, 0, 200)";
-								// }
-								//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";
-						})
-						//.style("opacity", 0.5)	
+						})	
 				}
 				
 			};
@@ -167,25 +167,45 @@
 			.on("click", function() {
 			var paragraphID = d3.select(this).attr("id");
 			
+				// if (paragraphID == "K2") {
+				// 	var mean_file = "k2_means.csv";
+				// 	var data_file = "Data_k2.csv"
+				// }
+				// else if (paragraphID == "K3") {
+				// 	var mean_file = "k3_means.csv";
+				// 	var data_file = "Data_k3.csv"
+				// }
+				// else if (paragraphID == "K4") {
+				// 	var mean_file = "k4_means.csv";
+				// 	var data_file = "Data_k4.csv"
+				// }
+				// else if (paragraphID == "K5") {
+				// 	var mean_file = "k5_means.csv";
+				// 	var data_file = "Data_k5.csv"
+				// }
+				// else if (paragraphID == "K6") {
+				// 	var mean_file = "k6_means.csv";
+				// 	var data_file = "Data_k6.csv"
+				// };
 				if (paragraphID == "K2") {
-					var mean_file = "k2_means.csv";
-					var data_file = "Data_k2.csv"
+					var mean_file = mean_file_k2;
+					var data_file = data_file_k2;
 				}
 				else if (paragraphID == "K3") {
-					var mean_file = "k3_means.csv";
-					var data_file = "Data_k3.csv"
+					var mean_file = mean_file_k3;
+					var data_file = data_file_k3;
 				}
 				else if (paragraphID == "K4") {
-					var mean_file = "k4_means.csv";
-					var data_file = "Data_k4.csv"
+					var mean_file = mean_file_k4;
+					var data_file = data_file_k4;
 				}
 				else if (paragraphID == "K5") {
-					var mean_file = "k5_means.csv";
-					var data_file = "Data_k5.csv"
+					var mean_file = mean_file_k5;
+					var data_file = data_file_k5;
 				}
 				else if (paragraphID == "K6") {
-					var mean_file = "k6_means.csv";
-					var data_file = "Data_k6.csv"
+					var mean_file = mean_file_k6;
+					var data_file = data_file_k6;
 				};
 				
 				//Add dots for the observations
