@@ -28,7 +28,8 @@
     </head>
 	
 	<h2><em>Assignment 2B: </em> Visualizing geodata</h2>
-	<div>Write explanatory text here</div>
+	<p>Write explanatory text here</p>
+	
 		<div id="k2">
 			<input name="k2btn"
 				type="button"
@@ -146,14 +147,14 @@
 								else if(d.Label == 1) {
 									return "rgb(0, 200, 0)";
 								}
-						})				
+						})		
 				}
 				
 				function addObs(data_csv){
 					svg.selectAll("dot")
 						.data(data_csv)
 						.enter()
-						.append("circle")
+						.append("dot")
 						.attr("cx", function(d) {
 							return projection([d.X_input, d.Y_input])[0];
 						})
@@ -210,7 +211,7 @@
 				
 				function addMeans(mean_csv){
 					var circles = svg.selectAll("circle")	//Select all circles
-						.data(mean_csv) 				//Re-bind data to existing circles, return the 'update' selection
+						.data(mean_csv) 					//Re-bind data to existing circles, return the 'update' selection
 				 circles.transition()
 						.ease("circle")
 						.duration(2000)
