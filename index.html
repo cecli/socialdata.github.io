@@ -96,6 +96,12 @@
 			d3.json("sfpddistricts.json", function(json) {
 				addDataToMap(json);
 			});
+
+			d3.selection.prototype.moveToFront = function() {
+				return this.each(function(){
+					this.parentNode.appendChild(this);
+				});
+			};
 				
 			function addDataToMap(json){
 				//Bind data and create one path per GeoJSON feature
@@ -155,7 +161,8 @@
 								else if(d.Label == 1) {
 									return "rgb(0, 200, 0)";
 								}
-						})	
+						})
+						d3.selectAll('#mean').moveToFront()						
 				}						
 				
 				function addMeans(mean_csv) {
@@ -226,6 +233,7 @@
 				 circles.transition()
 						.ease("circle")
 						.duration(2000)
+						.attr("id", "mean")
 						.attr("cx", function(d) {
 							return projection([d.lon, d.lat])[0];
 						})
@@ -255,7 +263,7 @@
 									return "rgb(0, 200, 200)";
 								}
 								//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";						
-						})
+						})						
 						
 					//Enter
 				//  circles.enter()
@@ -369,6 +377,7 @@
 								}
 								//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";
 						})
+						d3.selectAll('#mean').moveToFront()
 
 					//Exit
 					dots.exit()
