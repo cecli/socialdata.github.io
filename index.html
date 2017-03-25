@@ -245,12 +245,13 @@
 				//Add dots for the observations
 				d3.csv(data_file, function(data_csv){
 					addObs(data_csv);
+					addMeans(mean_csv);
 				});
 				
 				//Add circles for the K means
-				d3.csv(mean_file, function(mean_csv){
-					addMeans(mean_csv);
-				});
+				// d3.csv(mean_file, function(mean_csv){
+				// 	addMeans(mean_csv);
+				// });
 				
 				function addMeans(mean_csv){
 					var circles = svg.selectAll("circle")	//Select all circles
