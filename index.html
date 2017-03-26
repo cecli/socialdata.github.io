@@ -272,6 +272,7 @@
 						.data(data_csv); 				//Re-bind data to existing dots, return the 'update' selection
 					dots.enter()						
 						.append("circle")
+						.attr("id", "obs")
 						.attr("cx", function(d) {
 							return projection([d.X_input, d.Y_input])[0];
 						})
@@ -377,6 +378,7 @@
 								}					
 						})
 						.style("opacity", 0.2)
+						d3.selectAll('#mean').style("visibility", "hidden")
 				}		
 
 				function addObs(data_csv){
@@ -413,14 +415,17 @@
 								}								
 						})
 						.style("opacity", 0.2)
-					  d3.selectAll('#mean').moveToFront()
+					  //d3.selectAll('#mean').moveToFront()
+					  d3.selectAll('#obs').style("visibility", "hidden")
 				}				
 			})
 			d3.selectAll("div")
 			.on("mouseout", function() {
 			var divID = d3.select(this).attr("id");
 				d3.selectAll('#mean2').remove()
-				d3.selectAll('#obs2').remove()							
+				d3.selectAll('#obs2').remove()	
+				d3.selectAll('#mean').style("visibility", "visible")
+				d3.selectAll('#obs').style("visibility", "visible")					
 			})
 			
         </script>
