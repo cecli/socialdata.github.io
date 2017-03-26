@@ -21,6 +21,15 @@
 				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
 				pointer-events: none;
 			}
+
+			#descriptionText {
+				display:inline
+
+			}
+			#description {
+				display:inline
+
+			}
 		</style>
     </head>
 	
@@ -28,9 +37,13 @@
 	<p>Click a button to see visualizations of the K-mean results.
 	   The default view is for K = 3. Hover over buttons for preview.
 	</p>
+
+	<p id="description">You are now visualizing: </p>
+	<p id="descriptionText" class="descriptionText" onchange="descriptionText(this);"></p>
 	
 		<div id="k2">
 			<input name="k2btn"
+				id="k2mean"
 				type="button"
 				value="K = 2"
 				style="float:left"></input>
@@ -190,25 +203,32 @@
 			.on("click", function() {
 			var divID = d3.select(this).attr("id");
 			
+				var descriptionText = document.getElementById('descriptionText');
+
 				if (divID == "k2") {
 					var mean_file = mean_file_k2;
 					var data_file = data_file_k2;
+					descriptionText.innerHTML = "K = 2"
 				}
 				else if (divID == "k3") {
 					var mean_file = mean_file_k3;
 					var data_file = data_file_k3;
+					descriptionText.innerHTML = "K = 3"
 				}
 				else if (divID == "k4") {
 					var mean_file = mean_file_k4;
 					var data_file = data_file_k4;
+					descriptionText.innerHTML = "K = 4"
 				}
 				else if (divID == "k5") {
 					var mean_file = mean_file_k5;
 					var data_file = data_file_k5;
+					descriptionText.innerHTML = "K = 5"
 				}
 				else if (divID == "k6") {
 					var mean_file = mean_file_k6;
 					var data_file = data_file_k6;
+					descriptionText.innerHTML = "K = 6"
 				};
 				
 				function call_obs(){
@@ -259,8 +279,7 @@
 									return "rgb(0, 200, 200)";
 								}					
 						})
-						.style("opacity", 1)						
-				 //Exit
+						.style("opacity", 1)					
 				 circles.exit()
 						.remove();
 				}		
@@ -298,6 +317,7 @@
 									return "rgb(0, 200, 200)";
 								}
 						})
+					  d3.selectAll('#mean').style("visibility", "visible")
 					  d3.selectAll('#mean').moveToFront()
 					    .style("opacity", 1)
 					dots.exit()
@@ -417,7 +437,6 @@
 						.style("opacity", 0.5)
 					  d3.selectAll('#obs').style("visibility", "hidden")
 					  d3.selectAll('#mean2').moveToFront()
-
 				}				
 			})
 			d3.selectAll("div")
