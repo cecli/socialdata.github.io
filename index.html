@@ -259,11 +259,9 @@
 									return "rgb(0, 200, 200)";
 								}					
 						})
-						.style("opacity", 1)
-
-						
-					//Exit
-					circles.exit()
+						.style("opacity", 1)						
+				 //Exit
+				 circles.exit()
 						.remove();
 				}		
 
@@ -301,7 +299,7 @@
 								}
 						})
 					  d3.selectAll('#mean').moveToFront()
-					  .style("opacity", 1)
+					    .style("opacity", 1)
 					dots.exit()
 						.remove()
 				}				
@@ -378,7 +376,8 @@
 								}					
 						})
 						.style("opacity", 0.5)
-						d3.selectAll('#mean').style("visibility", "hidden")
+					  d3.selectAll('#mean').style("visibility", "hidden")
+
 				}		
 
 				function addObs(data_csv){
@@ -414,9 +413,11 @@
 									return "rgb(0, 200, 200)";
 								}								
 						})
+					  
 						.style("opacity", 0.5)
-					  //d3.selectAll('#mean').moveToFront()
 					  d3.selectAll('#obs').style("visibility", "hidden")
+					  d3.selectAll('#mean2').moveToFront()
+
 				}				
 			})
 			d3.selectAll("div")
