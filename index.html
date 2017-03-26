@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Week 8: Chapter 12</title>
         <script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
-		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<style type="text/css">
 			#tooltip {
 				position: absolute;
@@ -62,6 +62,12 @@
     <body>
         <script type="text/javascript">
 
+			d3.selection.prototype.moveToFront = function() {
+					return this.each(function(){
+						this.parentNode.appendChild(this);
+					});
+				};
+
 			//Reading the datafiles once and for all
 			var mean_file_k2 = "k2_means.csv";
 			var data_file_k2 = "Data_k2.csv";
@@ -94,14 +100,8 @@
 						.attr("height", h);
 			//Load in GeoJSON data
 			d3.json("sfpddistricts.json", function(json) {
-				addDataToMap(json);
-			});
-
-			d3.selection.prototype.moveToFront = function() {
-				return this.each(function(){
-					this.parentNode.appendChild(this);
-				});
-			};
+				addDataToMap(json);				
+			});			
 				
 			function addDataToMap(json){
 				//Bind data and create one path per GeoJSON feature
@@ -110,7 +110,7 @@
 				   .enter()
 				   .append("path")
 				   .attr("d", path)
-				   .style("fill", "steelblue");			
+				   .style("fill", "steelblue");		
 				   
 				// addObsToMap();
 				// function addObsToMap() {
@@ -162,7 +162,7 @@
 									return "rgb(0, 200, 0)";
 								}
 						})
-						d3.selectAll('#mean').moveToFront()						
+						d3.selectAll('#mean').moveToFront()					
 				}						
 				
 				function addMeans(mean_csv) {
@@ -305,8 +305,6 @@
 						
 					//Exit
 					circles.exit()
-						.transition()
-						.duration(500)
 						.remove();
 				}		
 
@@ -377,12 +375,10 @@
 								}
 								//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";
 						})
-						d3.selectAll('#mean').moveToFront()
+					  d3.selectAll('#mean').moveToFront()
 
 					//Exit
 					dots.exit()
-						.transition()
-						.duration(500)
 						.remove()
 				}		
 				
