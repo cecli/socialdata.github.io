@@ -26,7 +26,7 @@
 	
 	<h2><em>Assignment 2B: </em> Visualizing geodata</h2>
 	<p>Click a button to see visualizations of the K-mean results.
-	   The default view is for K = 2. Hover over buttons for preview.
+	   The default view is for K = 3. Hover over buttons for preview.
 	</p>
 	
 		<div id="k2">
@@ -117,12 +117,12 @@
 				   .style("fill", "steelblue");
 
 				function call_obs(){		
-					d3.csv(data_file_k2, function(data_csv){			
+					d3.csv(data_file_k3, function(data_csv){			
 						addObs(data_csv)
 					});
 				}
 
-				d3.csv(mean_file_k2, function(mean_csv){			
+				d3.csv(mean_file_k3, function(mean_csv){			
 					addMeans(mean_csv)
 					call_obs();
 				});	
@@ -147,6 +147,9 @@
 								}
 								else if(d.Label == 1) {
 									return "rgb(0, 200, 0)";
+								}
+								else if(d.Label == 2) {
+									return "rgb(200, 0, 0)";
 								}
 						})
 					 d3.selectAll('#mean').moveToFront()					
@@ -174,6 +177,9 @@
 								}
 								else if(d.Label == 1) {
 									return "rgb(0, 200, 0)";
+								}
+								else if(d.Label == 2) {
+									return "rgb(200, 0, 0)";
 								}
 						})						
 				}				
@@ -340,8 +346,6 @@
 					var circles = svg.selectAll("circle")	//Select all circles
 						.data(mean_csv) 					//Re-bind data to existing circles, return the 'update' selection
 				 circles.transition()
-						.ease("circle")
-						.duration(2000)
 						.attr("id", "mean2")
 						.attr("cx", function(d) {
 							return projection([d.lon, d.lat])[0];
