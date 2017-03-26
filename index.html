@@ -91,18 +91,18 @@
 			};		
 
 			//Reading the datafiles once and for all
-			var mean_file_k2 = "data/k2_means.csv";
-			var data_file_k2 = "data/Data_k2.csv";
-			var mean_file_k3 = "data/k3_means.csv";
-			var data_file_k3 = "data/Data_k3.csv";
-			var mean_file_k4 = "data/k4_means.csv";
-			var data_file_k4 = "data/Data_k4.csv";
-			var mean_file_k5 = "data/k5_means.csv";
-			var data_file_k5 = "data/Data_k5.csv";
-			var mean_file_k6 = "data/k6_means.csv";
-			var data_file_k6 = "data/Data_k6.csv";
+			var mean_file_k2 = "data/k_mean_files/k2_means.csv";
+			var data_file_k2 = "data/data_files/Data_k2.csv";
+			var mean_file_k3 = "data/k_mean_files/k3_means.csv";
+			var data_file_k3 = "data/data_files/Data_k3.csv";
+			var mean_file_k4 = "data/k_mean_files/k4_means.csv";
+			var data_file_k4 = "data/data_files/Data_k4.csv";
+			var mean_file_k5 = "data/k_mean_files/k5_means.csv";
+			var data_file_k5 = "data/data_files/Data_k5.csv";
+			var mean_file_k6 = "data/k_mean_files/k6_means.csv";
+			var data_file_k6 = "data/data_files/Data_k6.csv";
 
-			var dis_path = "data/dis_cent.csv";
+			var dis_path = "data/data_files/dis_cent.csv";
 			var dis_name = [];
 			var x_cent = [];
 			var y_cent = [];
@@ -137,7 +137,7 @@
 						.attr("height", h);
 
 			//Load in count of prostitution crime
-			d3.csv("data/total_prost.csv", function(data) {
+			d3.csv("data/data_files/total_prost.csv", function(data) {
 
 				//Set input domain for color scale
 				color.domain([
@@ -146,7 +146,7 @@
 				]);
 
 			//Load in GeoJSON data
-			d3.json("data/sfpddistricts.json", function(json) {	
+			d3.json("data/data_files/sfpddistricts.json", function(json) {	
 
 				    //Merge the ag. data and GeoJSON
 					//Loop through once for each ag. data value
