@@ -103,6 +103,7 @@
 				addDataToMap(json);				
 			});			
 				
+			//Adding data from the datafiles to the map	
 			function addDataToMap(json){
 				//Bind data and create one path per GeoJSON feature
 				svg.selectAll("path")
@@ -110,38 +111,21 @@
 				   .enter()
 				   .append("path")
 				   .attr("d", path)
-				   .style("fill", "steelblue");		
-				   
-				// addObsToMap();
-				// function addObsToMap() {
-				// 	//Add dots for the observations
-				// 	d3.csv(data_file_k2, function(data_csv){					
-				// 		addObs(data_csv);
-				// 		console.log("addobstomap");	
-				// 		addMeansToMap();
-				// 	});					
-				// }																
-				
-				// function addMeansToMap() {
-				// 	//Add circles for the K means
-				// 	d3.csv(mean_file_k2, function(mean_csv){			
-				// 		addMeans(mean_csv)
-				// 		console.log("addmeanstomap")
-				// 	});	
-				// }
+				   .style("fill", "steelblue");
 
-				d3.csv(data_file_k2, function(data_csv){			
-					addObs(data_csv)
-					console.log("addobstomap")
-				});	
+				function call_obs(){		
+					d3.csv(data_file_k2, function(data_csv){			
+						addObs(data_csv)
+					});
+				}
 
 				d3.csv(mean_file_k2, function(mean_csv){			
 					addMeans(mean_csv)
-					console.log("addmeanstomap")
+					call_obs();
 				});	
 
-				function addObs(data_csv){
-					console.log("addObs")
+				//Adding observations
+				function addObs(data_csv) {
 		   		     svg.selectAll("dot")
 						.data(data_csv)
 						.enter()
@@ -162,11 +146,11 @@
 									return "rgb(0, 200, 0)";
 								}
 						})
-						d3.selectAll('#mean').moveToFront()					
+					 d3.selectAll('#mean').moveToFront()					
 				}						
 				
+				//Adding means
 				function addMeans(mean_csv) {
-					console.log("addMeans")
 		 			 svg.selectAll("circle")
 						.data(mean_csv)
 						.enter()
@@ -218,13 +202,16 @@
 					var data_file = data_file_k6;
 				};
 				
-				//Add dots for the observations
-				d3.csv(data_file, function(data_csv	){
-					addObs(data_csv);
-				});		
+				function call_obs(){
+					//Add dots for the observations
+					d3.csv(data_file, function(data_csv	){
+						addObs(data_csv);
+					});		
+				}
 				//Add circles for the K means
 				d3.csv(mean_file, function(mean_csv){
 					addMeans(mean_csv);	
+					call_obs();
 				});							
 				
 				function addMeans(mean_csv){
@@ -261,46 +248,8 @@
 								}
 								else if(d.Label == 5) {
 									return "rgb(0, 200, 200)";
-								}
-								//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";						
-						})						
-						
-					//Enter
-				//  circles.enter()
-				// 		.append("circle")
-				// 		.attr("cx", function(d) {
-				// 			return projection([d.lon, d.lat])[0];
-				// 		})
-				// 		.attr("cy", function(d) {
-				// 			return projection([d.lon, d.lat])[1];
-				// 		})
-				// 		.attr("r", "8")
-				// 		.style("stroke", "black")
-				// 		.attr("stroke-width", "2.5")
-				// 		.style("fill", function(d) {
-				// 				if(d.Label == 0) {
-				// 					return "rgb(0, 0, 200)";
-				// 				}
-				// 				else if(d.Label == 1) {
-				// 					return "rgb(0, 200, 0)";
-				// 				}
-				// 				else if(d.Label == 2) {
-				// 					return "rgb(200, 0, 0)";
-				// 				}
-				// 				else if(d.Label == 3) {
-				// 					return "rgb(200, 200, 0)";
-				// 				}
-				// 				else if(d.Label == 4) {
-				// 					return "rgb(200, 0, 200)";
-				// 				}
-				// 				else if(d.Label == 5) {
-				// 					return "rgb(0, 200, 200)";
-				// 				}
-				// 				//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";
-				// 		})
-						//.style("opacity", 1)	
-						
-					//Update visuals
+								}					
+						});
 
 						
 					//Exit
@@ -311,39 +260,6 @@
 				function addObs(data_csv){
 					var dots = svg.selectAll("dot")	//Select all dots
 						.data(data_csv); 				//Re-bind data to existing dots, return the 'update' selection
-					// dots.transition()
-					// 	.ease("circle")
-					// 	.duration(2000)
-					// 	.attr("cx", function(d) {
-					// 		return projection([d.X_input, d.Y_input])[0];
-					// 	})
-					// 	.attr("cy", function(d) {
-					// 		return projection([d.X_input, d.Y_input])[1];
-					// 	})
-					// 	.attr("r", "1.5")
-					// 	.transition().duration(2000)
-					// 	.style("fill", function(d) {
-					// 			if(d.Label == 0) {
-					// 				return "rgb(0, 0, 200)";
-					// 			}
-					// 			else if(d.Label == 1) {
-					// 				return "rgb(0, 200, 0)";
-					// 			}
-					// 			else if(d.Label == 2) {
-					// 				return "rgb(200, 0, 0)";
-					// 			}
-					// 			else if(d.Label == 3) {
-					// 				return "rgb(200, 200, 0)";
-					// 			}
-					// 			else if(d.Label == 4) {
-					// 				return "rgb(200, 0, 200)";
-					// 			}
-					// 			else if(d.Label == 5) {
-					// 				return "rgb(0, 200, 200)";
-					// 			}
-					// 			//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";
-					// 	})	
-					//Enter
 					dots.enter()						
 						.append("circle")
 						.attr("cx", function(d) {
@@ -376,12 +292,9 @@
 								//return "rgb(0, 0, " + (parseInt(d.Label+150)) + ")";
 						})
 					  d3.selectAll('#mean').moveToFront()
-
-					//Exit
 					dots.exit()
 						.remove()
-				}		
-				
+				}				
 			});	
 			
         </script>
