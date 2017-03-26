@@ -33,7 +33,7 @@
 		</style>
     </head>
 	
-	<h2><em>Assignment 2B: </em> Visualizing geodata</h2>
+	<h2><em>Assignment 2B: </em> Visualizing geodata using D3.js</h2>
 	<p>Click a button to see visualizations of the K-mean results.
 	   The default view is for K = 3. Hover over buttons for preview.
 	</p>
@@ -41,6 +41,7 @@
 	<p id="description">You are now visualizing: </p>
 	<p id="descriptionText" class="descriptionText" onchange="descriptionText(this);"></p>
 	
+	    <!--Buttons for switching between the different k-values-->
 		<div id="k2">
 			<input name="k2btn"
 				type="button"
@@ -73,7 +74,7 @@
 		</div>
 	
     <body>
-        <script type="text/javascript">
+	<script type="text/javascript">
 
 			d3.selection.prototype.moveToFront = function() {
 					return this.each(function(){
@@ -90,18 +91,18 @@
 			};		
 
 			//Reading the datafiles once and for all
-			var mean_file_k2 = "k2_means.csv";
-			var data_file_k2 = "Data_k2.csv";
-			var mean_file_k3 = "k3_means.csv";
-			var data_file_k3 = "Data_k3.csv";
-			var mean_file_k4 = "k4_means.csv";
-			var data_file_k4 = "Data_k4.csv";
-			var mean_file_k5 = "k5_means.csv";
-			var data_file_k5 = "Data_k5.csv";
-			var mean_file_k6 = "k6_means.csv";
-			var data_file_k6 = "Data_k6.csv";
+			var mean_file_k2 = "data/k2_means.csv";
+			var data_file_k2 = "data/Data_k2.csv";
+			var mean_file_k3 = "data/k3_means.csv";
+			var data_file_k3 = "data/Data_k3.csv";
+			var mean_file_k4 = "data/k4_means.csv";
+			var data_file_k4 = "data/Data_k4.csv";
+			var mean_file_k5 = "data/k5_means.csv";
+			var data_file_k5 = "data/Data_k5.csv";
+			var mean_file_k6 = "data/k6_means.csv";
+			var data_file_k6 = "data/Data_k6.csv";
 
-			var dis_path = "dis_cent.csv";
+			var dis_path = "data/dis_cent.csv";
 			var dis_name = [];
 			var x_cent = [];
 			var y_cent = [];
@@ -112,8 +113,8 @@
 			var centroids_2y = [];
 			
 			//Width and height
-			var w = 500;
-			var h = 500;
+			var w = 600;
+			var h = 600;
 			//Define map projection
 			var projection = d3.geo.mercator()
 								   .center([-122.433701, 37.767683]) //Center at SF
@@ -136,7 +137,7 @@
 						.attr("height", h);
 
 			//Load in count of prostitution crime
-			d3.csv("total_prost.csv", function(data) {
+			d3.csv("data/total_prost.csv", function(data) {
 
 				//Set input domain for color scale
 				color.domain([
@@ -145,9 +146,9 @@
 				]);
 
 			//Load in GeoJSON data
-			d3.json("sfpddistricts.json", function(json) {	
+			d3.json("data/sfpddistricts.json", function(json) {	
 
-				//Merge the ag. data and GeoJSON
+				    //Merge the ag. data and GeoJSON
 					//Loop through once for each ag. data value
 					for (var i = 0; i < data.length; i++) {
 				
@@ -201,22 +202,11 @@
 				addDataToMap(json);	
 				var current_coord = [];
 				});
-			});			
-							
-				//Load in GeoJSON data
-			// d3.json("sfpddistricts.json", function(json) {
-			// 	addDataToMap(json);	
-			// 	var current_coord = [];
-			// });
+			});
+
 			//Adding data from the datafiles to the map	
 			function addDataToMap(json){
 			//Bind data and create one path per GeoJSON feature
-			// svg.selectAll("path")
-			// 	   .data(json.features)
-			// 	   .enter()
-			// 	   .append("path")
-			// 	   .attr("d", path)
-			// 	   .style("fill", "steelblue");
 			  d3.selectAll("path")
 			  	.each(function (d, i) {
      				var centroid = path.centroid(d);
@@ -225,15 +215,6 @@
   				});
 
 				labels_add();
-
-									
-				//Bind data and create one path per GeoJSON feature
-//				svg.selectAll("path")
-//				   .data(json.features)
-//				   .enter()
-//				   .append("path")
-//				   .attr("d", path)
-//				   .style("fill", "steelblue");
 
 				function call_obs(){		
 					d3.csv(data_file_k3, function(data_csv){			
@@ -614,5 +595,5 @@
 			})
 			
         </script>
-    </body>
+</body>
 </html>
