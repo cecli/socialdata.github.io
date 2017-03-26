@@ -24,11 +24,10 @@
 
 			#descriptionText {
 				display:inline
-
 			}
+			
 			#description {
 				display:inline
-
 			}
 		</style>
     </head>
@@ -169,8 +168,7 @@
 								json.features[j].properties.Count = dataValue;
 								
 								//Stop looking through the JSON
-								break;
-								
+								break;								
 							}
 						}		
 					}
@@ -184,7 +182,6 @@
 					   .style("fill", function(d) {
 					   		//Get data value
 					   		var value = d.properties.Count;
-					   		console.log(value)
 					   		
 					   		if (value) {
 					   			//If value exists…
@@ -288,7 +285,6 @@
 				}				
 			};
 
-
 			function labels_add(){
 				d3.csv(dis_path, function(data){
 					data.map(function(d){
@@ -335,10 +331,7 @@
 											.attr("opacity", "0.9")
 										d3.select(this).moveToBack();
 									});
-					//console.log(labels);
-
 				});	
-
 			}
 		d3.selectAll('#lab').moveToFront();
 		//On click, update with new data			
