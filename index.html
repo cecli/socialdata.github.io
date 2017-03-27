@@ -114,10 +114,25 @@
     </head>
 <div id="ass2A_div">
 	<body>
-		<h2>Visualization 1: Scatterplot</h2>
-		<p class="Description" id="SelectionYear" margin-left= "100px">
-			You are now visualizing: 2003 Data
+		<h2>Visualization 2A: One scatterplot and two datasets</h2>
+		<p>
+		In the visualization below, the San Fransisco crime observations for the crimes categorised as "Vehicle Theft"
+		as well as "Prositution" by the SFPD have been depicted as a scatterplot. Each point of the scatterplot corresponds
+		to a district in San Fransisco, and have been labeled accordingly. The radius of each point in the plot is made
+		proportional to the total number of crimes in that district. This means, that if a district has a high crime count,
+		it will be marked with a correspondingly large dot. The total number of crimes is a summation of the number of 
+		vehicle thefts and prostitution crimes. The total number of prositition crimes are shown on the x-axis, 
+		whereas the total number of vehicle thefts are shown on the y-axis. 
+		<br><br>
+		It is possible to click two buttons placed above the plot to change the data from 2003 data, which is the default, to 2015
+		data - and back again, if wanted. 
+		<br><br>
+		If you wish to view the exact number of crimes, both the number of prostitution crimes, the number of vehicle thefts, as 
+		well as the total number of crimes, please hover over each dot (meaning each district), and these numbers will appear. 
 		</p>
+		<h4 class="Description" id="SelectionYear" margin-left= "100px">
+			You are now visualizing: 2003 Data
+		</h4>
 
 		<div id="add2015">
 			<input class="myButton"
@@ -149,6 +164,7 @@
 
 
 			<script type="text/javascript">
+			    //Whenever a button is clicked, the description text changes according to button ID clicked
 				function functionChange(){
 					d3.selectAll("myButton")
 					  .on("click", function(){
@@ -164,11 +180,12 @@
 					  })
 				}
 
-				//Width and height
+				//Width, height and padding for the scatterplot
 				var w = 950;
 				var h = 700;
 				var padding = 100;
 
+				//Loading in the datafiles for the scatterplot
 				var prost_path = 'data/prost/prost';
 				var vehic_path = 'data/vehic/vehic';
 				var prost_path2003 = prost_path + '2003' + '.csv';
@@ -191,7 +208,7 @@
 				firstcsv(prost_path2003, vehic_path2003, counts_p03, counts_v03, dataset03, false);
 				firstcsv(prost_path2015, vehic_path2015, counts_p15, counts_v15, dataset15, true);
 
-				//first function for elaborating the csv file 
+				//first function for handling the csv file 
 				//flag parameter: false if it is the first time it is called, true if it is not the first time
 				//the function is called, and it means the function elaborating svg must be called as well. 
 				function firstcsv(p_path, v_path, counts_p, counts_v, dset, flag){
@@ -209,13 +226,12 @@
 							})
 						}
 
-						//second function for elaborating the csv file 
+						//second function for handling the csv file 
 						secondcsv(p_path, v_path, counts_p, counts_v, dset, flag);
 					});
 				}
-				
 
-
+				//Getting the crime count
 				function secondcsv(p_path, v_path, counts_p, counts_v, dset, flag){
 					d3.csv(v_path, function(error, data) {
 						if(error){
@@ -243,7 +259,7 @@
 
 
 
-		    	//function inside which the actual svg is elaborated 
+		    	//function inside which the actual svg is handled 
 		    	function do_svg_stuff(){
 			    	//Create scale functions
 					var xScale = d3.scale.linear()
@@ -304,7 +320,6 @@
 						.attr("opacity", ".7")
 						.on("mouseover", function(d, i) {
 							var sum = d[0] + d[1];
-							//console.log(d[0], d[1], sum)
 							div	.transition()        
 								.duration(10)      
 								.style("opacity", .9);
@@ -323,6 +338,8 @@
 								.attr("stroke-width", "3px")
 							});
 
+					//Creating the tooltip on top of the visualization, containing information about 
+					//poits being moused over
 					var div = d3.select("#firstvis").append("div")   
 								.attr("class", "tooltip")  
 								.style("opacity", 0);
@@ -367,6 +384,7 @@
 						.attr("fill", "black")
 						.attr("font-weight", "bold")
 						.attr("opacity", "0.9")
+						//Change the size of the label on mouseover/out
 						.on("mouseover", function() { 
 							d3.select(this)
 								.transition()
@@ -407,6 +425,7 @@
 						.attr("transform", "translate("+ ((padding/5)-8) +","+((h-(padding))/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
 						.text("Total #VEHICLE THEFT");
 
+					//When the button for 2015 is clicked
 					d3.select("#add2015")
 						.on("click", function(d) {					
 							me = svg.selectAll("circle")
@@ -414,7 +433,7 @@
 								.transition()
 								.ease("linear")
 								.duration(1000)
-								.each("start", function() {      // <-- Executes at start of transition
+								.each("start", function() { 
 									d3.select(this)
 										.attr("fill", "orange")
 										.attr("r", 7)
@@ -425,7 +444,7 @@
 								.attr("cy", function(d) {
 									return yScale(d[1]);
 								})
-								.transition()    // <-- Transition #2
+								.transition()
 								.duration(1000)
 								.attr("r", function(d) {
 									return rScale(d[0]+d[1]);
@@ -435,7 +454,7 @@
 								.attr("stroke-width", "3px")	
 								.attr("opacity", ".7");
 								
-							svg.selectAll("text")  // <-- Note "text", not "circle" or "rect"
+							svg.selectAll("text")
 								.data(dataset15)
 								.transition()
 								.ease("linear")
@@ -462,6 +481,7 @@
 							document.getElementById("SelectionYear").innerHTML = "You are now visualizing: 2015 data";
 						})
 			
+					//When the button for 2015 is clicked
 					d3.select("#add2003")
 							.on("click", function(d) {
 								me = svg.selectAll("circle")
@@ -469,7 +489,7 @@
 									.transition()
 									.ease("linear")
 									.duration(1000)
-									.each("start", function() {      // <-- Executes at start of transition
+									.each("start", function() {
 										d3.select(this)
 											.attr("fill", "orange")
 											.attr("r", 7)
@@ -480,7 +500,7 @@
 									.attr("cy", function(d) {
 										return yScale(d[1]);
 									})
-									.transition()    // <-- Transition #2
+									.transition()
 									.duration(1000)
 									.attr("r", function(d) {
 										return rScale(d[0]+d[1]);
@@ -490,7 +510,7 @@
 									.attr("stroke-width", "3px")	
 									.attr("opacity", ".7");
 									
-								svg.selectAll("text")  // <-- Note "text", not "circle" or "rect"
+								svg.selectAll("text")
 									.data(dataset03)
 									.transition()
 									.ease("linear")
@@ -525,13 +545,26 @@
 	</body>
 </div>
 <div id="ass2B_div">	
-	<h2><em>Assignment 2B: </em> Visualizing geodata using D3.js</h2>
+	<h2><em>Assignment 2B: </em> Visualizing geodata</h2>
+	<p>
+	In the visualization below, the San Fransisco crime observations for the crimes categorised as "Prostitution" by the SFPD 
+	in the years from 2003 until now have been depicted as a geospatial map. From the longitude and latitude for each crime observations,
+	a K-means model was trained and fitted. It is possible to view the results for different values of K, ranging from K=2, ..., 6. 
+	Depending on the value of K, there will be K centroids, which is shown as large colored dots. All the GPS point belonging to each 
+	centroid is colored according to the centroid. The map is color-coded according to the total number of crimes in each district. 
+	This means, that a darker shade means more crime, and a lighter shade means less crime. 
+	<br><br>
+	The default model viewed is K=3. After analyzing the Total Error for each K-means model, this was deemed the best fit, when taking both 
+	model complexity and Total Error into account.
+	<br><br>
+	It is possible to click the buttons above the graph to change to a different value of K. When hovering over each button, a preview of the 
+	new visualization will appear.
+	</p>
 	<p>Click a button to see visualizations of the K-mean results.
 	   The default view is for K = 3. Hover over buttons for preview.
 	</p>
 
-	<p id="description">You are now visualizing: K = 3</p>
-	<p id="descriptionText" class="descriptionText" onchange="descriptionText(this);"></p>
+	<h4 id="descriptionText" class="descriptionText" onchange="descriptionText(this);">You are now visualizing: K = 3</h4>
 	
 	    <!--Buttons for switching between the different k-values-->
 		<div id="k2">
@@ -568,19 +601,13 @@
     <body>
 	<script>
 
+			//Function for moving certain elements to the front, which we have applied in a few cases
+			//where certain SVG elements were hiding below others
 			d3.selection.prototype.moveToFront = function() {
 					return this.each(function(){
 						this.parentNode.appendChild(this);
 					});
 				};	
-			d3.selection.prototype.moveToBack = function() { 
-    				return this.each(function() { 
-       				var firstChild = this.parentNode; 
-        			if (firstChild) { 
-            			this.parentNode.insertBefore(this, firstChild); 
-        			} 
-    			}); 
-			};		
 
 			//Reading the datafiles once and for all
 			var mean_file_k2 = "data/k_mean_files/k2_means.csv";
@@ -703,15 +730,19 @@
      				centroids_2x.push(centroid[0])
      				centroids_2y.push(centroid[1])
   				});
-
+				//Adding labels to the map
 				labels_add();
 
+				//Applying the observations to the map
 				function call_obs(){		
 					d3.csv(data_file_k3, function(data_csv){			
 						addObs(data_csv)
 					});
 				}
 
+				//After the observations have been added, we add the mean points.
+				//The mean points have to be added after the observations, as the z-level of the SVG elements
+				//is dependent on the order in which they are applied.
 				d3.csv(mean_file_k3, function(mean_csv){			
 					addMeans(mean_csv)
 					call_obs();
@@ -745,7 +776,8 @@
 						.style("opacity", "0.8")
 						.attr("stroke", "grey")
 						.attr("stroke-width", "0.2")
-					 d3.selectAll('#mean').moveToFront()					
+					 d3.selectAll('#mean').moveToFront() //In some cases, the mean points are below the observations,
+					 									 //so we move them to the front just to be sure.				
 				}						
 				
 				//Adding means
@@ -826,7 +858,8 @@
 							})
 				}			
 				d3.selectAll('#lab').moveToFront();
-		//On click, update with new data			
+
+		//On click, update with new data, depending on the button id used on click.		
 		d3.selectAll("#k2, #k3, #k4, #k5, #k6")
 			.on("click", function() {
 			var divID = d3.select(this).attr("id");
@@ -836,27 +869,27 @@
 				if (divID == "k2") {
 					var mean_file = mean_file_k2;
 					var data_file = data_file_k2;
-					descriptionText.innerHTML = "K = 2"
+					descriptionText.innerHTML = "You are now visualizing: K = 2"
 				}
 				else if (divID == "k3") {
 					var mean_file = mean_file_k3;
 					var data_file = data_file_k3;
-					descriptionText.innerHTML = "K = 3"
+					descriptionText.innerHTML = "You are now visualizing: K = 3"
 				}
 				else if (divID == "k4") {
 					var mean_file = mean_file_k4;
 					var data_file = data_file_k4;
-					descriptionText.innerHTML = "K = 4"
+					descriptionText.innerHTML = "You are now visualizing: K = 4"
 				}
 				else if (divID == "k5") {
 					var mean_file = mean_file_k5;
 					var data_file = data_file_k5;
-					descriptionText.innerHTML = "K = 5"
+					descriptionText.innerHTML = "You are now visualizing: K = 5"
 				}
 				else if (divID == "k6") {
 					var mean_file = mean_file_k6;
 					var data_file = data_file_k6;
-					descriptionText.innerHTML = "K = 6"
+					descriptionText.innerHTML = "You are now visualizing: K = 6"
 				};
 				
 				function call_obs(){
@@ -914,7 +947,7 @@
 
 				function addObs(data_csv){
 					var dots = svg.selectAll("dot")	//Select all dots
-						.data(data_csv); 				//Re-bind data to existing dots, return the 'update' selection
+						.data(data_csv); 			//Re-bind data to existing dots, return the 'update' selection
 					dots.enter()						
 						.append("circle")
 						.attr("id", "obs")
@@ -948,6 +981,8 @@
 						.style("opacity", "0.8")
 						.attr("stroke", "grey")
 						.attr("stroke-width", "0.2")
+					  //We set the visibility of the points to be visible, as the mouseover function hides them,
+					  //to make the preview more clear.
 					  d3.selectAll('#mean').style("visibility", "visible")
 					  d3.selectAll('#mean').moveToFront()
 					    .style("opacity", 1)
@@ -980,6 +1015,7 @@
 					var data_file = data_file_k6;
 				};
 				
+				//As before, the order of adding the elements is important, hence observations before means.
 				function call_obs(){
 					//Add dots for the observations
 					d3.csv(data_file, function(data_csv	){
@@ -1027,6 +1063,7 @@
 								}					
 						})
 						.style("opacity", 0.5)
+					  //We hide the mean points to make the preview more clear.
 					  d3.selectAll('#mean').style("visibility", "hidden")
 
 				}		
@@ -1070,6 +1107,7 @@
 					  d3.selectAll('#mean2').moveToFront()
 				}				
 			})
+			//On mouseout, we remove the preview points and set the original points to be visible again.
 			d3.selectAll("#k2, #k3, #k4, #k5, #k6")
 			.on("mouseout", function() {
 			var divID = d3.select(this).attr("id");
